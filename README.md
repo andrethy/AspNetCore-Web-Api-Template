@@ -1,3 +1,4 @@
+
 # AspNetCore Web API Template
 My idea of what an ASP.NET Core Web API could look like. This is a template to make you start faster, by already utilizing some well-used techniques, and having the basics and most vital elements already implemented. 
 The template is open for modifications, so please leave comments and suggestions! :-)
@@ -23,28 +24,30 @@ The error handling middleware is used as a global exception catcher, and in this
 All exceptions will be showed as an internal server error with a status code of 500, unless the exception is of type **ApiException**, which means it is an error that you (the developer) have thrown, and therefore needs to be handled.
 A snippet of the class **ErrorHandlingMiddleware**:
 
-![enter image description here](https://i.imgur.com/TkVTWDP.png)
+![](https://i.imgur.com/TkVTWDP.png)
 
 If you look at the picture, you will notice that there's an ExceptionType with the name "InvalidPropertyValue". All ApiExceptions with the ErrorType of InvalidPropertyValue are automatically thrown, as I have included what I call a **ValidateModelStateFilter**. **ValidateModelStateFilter** is a filter that injects itself into AspNetCore's lifecycle, so its code will be executed for each *async* action in your controllers. What it does, is to always check if the ModelState is valid, and if it isn't, it will create an error message stating which properties are invalid, and throw a new **ApiException** with this message to be handled by the **ErrorHandlingMiddleware**.
 
 
 **Dependency injection**
 If you are familiar with the .NET Core framework, it is not unknown to you that dependency injection is built-in, which makes it a breeze to inject dependencies:
-![enter image description here](https://i.imgur.com/fNDJ1CR.png)
+![](https://i.imgur.com/fNDJ1CR.png)
 
 
-Integration tests:
+**Integration tests**
+For testing purposes, SQLite has been used to incorporate an easy setup of a testing database, because SQLite supports a InMemory database. This means it can use a relational database without having one "physically" installed somewhere. 
 
+Included in this template, is a class **BaseTest** provided, which all test classes are meant to inherit from, as this **BaseTest** will ensure that each test has a new database with seeded data (provided through the included **DbInitializer**). This ensures that each test will be independent of each other and to provide you with meaningful data for your tests (as long as you update this seeder!)
 
 
 # Packages included:
 * [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle)
-        Insert text here
+        Swashbuckle is responsible for making the Web API Swagger compatible. This provides a nice, easy to use interface to test all your actions.
 * [Serilog](https://github.com/serilog/serilog-aspnetcore)
-        Logging framework
+        Logging framework to easily log to files, database or the console.
 * [Entity Framework Core](https://github.com/aspnet/EntityFrameworkCore)
-        Text here
+        An ORM from Microsoft to make it fast and easy to communicate with a database. This template uses a MSSQL server, but a list of database providers is available here: https://docs.microsoft.com/en-us/ef/core/providers/
 * [SQLite](https://github.com/aspnet/Microsoft.Data.Sqlite)
-		Text here
+		The database provider used for testing
 
 

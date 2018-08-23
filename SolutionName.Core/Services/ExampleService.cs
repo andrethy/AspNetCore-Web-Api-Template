@@ -17,15 +17,17 @@ namespace SolutionName.Core.Services
             this.exampleRepository = exampleRepository;
         }
 
-        public async Task CreateExample(CreateExampleModel createExampleModel)
+        public async Task<int> CreateExample(CreateExampleModel createExampleModel)
         {
             var example = new Example()
             {
                 CreatedDate = DateTime.Now,
-                Name = createExampleModel.Name
+                Name = createExampleModel.Name,
+                Age = createExampleModel.Age
             };
 
-            await exampleRepository.Add(example);
+            var createdExample = await exampleRepository.Add(example);
+            return createdExample.Id;
         }
 
         public async Task DeleteAllExamples()
@@ -35,7 +37,7 @@ namespace SolutionName.Core.Services
 
         public async Task<IEnumerable<Example>> GetAllExamples()
         {
-            return await exampleRepository.GetAllExamples();
+            return await exampleRepository.List();
         }
     }
 }

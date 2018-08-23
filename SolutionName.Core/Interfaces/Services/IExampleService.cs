@@ -7,7 +7,7 @@ namespace SolutionName.Core.Interfaces.Services
 {
     public interface IExampleService
     {
-        Task CreateExample(CreateExampleModel createExampleModel);
+        Task<int> CreateExample(CreateExampleModel createExampleModel);
         Task<IEnumerable<Example>> GetAllExamples();
         Task DeleteAllExamples();
     }

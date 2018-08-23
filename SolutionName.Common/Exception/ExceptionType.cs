@@ -8,6 +8,5 @@
         InvalidPropertyValue = 10,
         AuthInvalidUsername = 20,
         AuthInvalidPassword = 21,
-
     }
 }

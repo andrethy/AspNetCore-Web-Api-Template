@@ -1,12 +1,12 @@
-﻿using System;
-using System.IO;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
 using SolutionName.Infrastructure.Data;
+using System;
+using System.IO;
 
 namespace SolutionName.ApiTemplate
 {
@@ -31,20 +31,30 @@ namespace SolutionName.ApiTemplate
 
         private static void SetupLogger(string[] args)
         {
-            //Default connectionString
-            var connectionString = "Data Source=YOUR_LIVE_SERVER_IP;Initial Catalog=YOUR_LIVE_DB_NAME;persist security info=True;user id=USERNAME;password=PASSWORD";
-
-            //Connectionstring for development
-            if (GetHostingEnvironment(args).IsDevelopment())
-                connectionString = "Server=(local);Database=ExampleDB;Trusted_Connection=True;MultipleActiveResultSets=true";
-
             var tableName = "Logs";
-
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Warning()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
-                .WriteTo.MSSqlServer(connectionString, tableName, autoCreateSqlTable: true)
+                .WriteTo.MSSqlServer(GetConnectionString(args), tableName, autoCreateSqlTable: true)
                 .CreateLogger();
+        }
+
+        private static string GetConnectionString(string[] args)
+        {
+            var connectionString = "Data Source=YOUR_LIVE_SERVER_IP;Initial Catalog=YOUR_LIVE_DB_NAME;persist security info=True;user id=USERNAME;password=PASSWORD";
+
+            //Connectionstring for development or staging
+            var hostingEnvironment = GetHostingEnvironment(args);
+            if (hostingEnvironment.IsDevelopment())
+            {
+                connectionString = "Server=(local);Database=ExampleDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+            }
+            else if (hostingEnvironment.IsProduction())
+            {
+                connectionString = "Your staging connectionstring here";
+            }
+
+            return connectionString;
         }
 
         private static void SetupSeeding(IWebHost host, string[] args)

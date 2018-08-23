@@ -28,8 +28,19 @@ namespace SolutionName.Infrastructure.Data
             }
         }
 
-        //Run this seed for development. You can add one for test/staging/prod aswell.
         public static void InitializeForDevelopment(ExampleContext context)
+        {
+            context.Database.EnsureCreated();
+
+            SeedExamples(context);
+        }
+        public static void InitializeForTest(ExampleContext context)
+        {
+            context.Database.EnsureCreated();
+
+            SeedExamples(context);
+        }
+        public static void InitializeForProduction(ExampleContext context)
         {
             context.Database.EnsureCreated();
 

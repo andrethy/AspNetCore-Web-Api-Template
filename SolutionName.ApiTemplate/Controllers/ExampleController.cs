@@ -1,14 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 using SolutionName.Common.Model.Example;
-using SolutionName.Core.Interfaces.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using SolutionName.Core.Entities;
+using SolutionName.Core.Interfaces.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SolutionName.ApiTemplate.Controllers
 {
+    //Note the missing [ApiController]! 
+    //The ApiController attribute would overwrite the ValidateModelStateFilter MVC filter, and eliminate the custom error handling for modelstates
+    [Produces("application/json")]
     [Route("api/[controller]")]
-    [ApiController]
     public class ExampleController : ControllerBase
     {
         private readonly IExampleService exampleService;
@@ -22,6 +24,8 @@ namespace SolutionName.ApiTemplate.Controllers
         /// Gets a collection of all "Example" entities
         /// </summary>
         /// <returns>A list of all "Example" entities</returns>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
         [HttpGet]
         public async Task<IEnumerable<Example>> GetAllExamples()
         {
@@ -34,10 +38,11 @@ namespace SolutionName.ApiTemplate.Controllers
         /// <param name="createExampleModel">The model giving the necessary attributes to make an "Example"</param>
         [HttpPost]
         [ProducesResponseType(200)]
-        public async Task<IActionResult> PostExample(CreateExampleModel createExampleModel)
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> PostExample([FromBody] CreateExampleModel createExampleModel)
         {
-            await exampleService.CreateExample(createExampleModel);
-            return Ok();
+            var createdExampleId = await exampleService.CreateExample(createExampleModel);
+            return Ok(createdExampleId);
         }
 
         /// <summary>
@@ -46,6 +51,7 @@ namespace SolutionName.ApiTemplate.Controllers
         [HttpDelete]
         [Route("DeleteAllExamples")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> DeleteAllExamples()
         {
             await exampleService.DeleteAllExamples();

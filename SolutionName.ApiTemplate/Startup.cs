@@ -1,17 +1,18 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using SolutionName.Core.Interfaces.Services;
-using SolutionName.Core.Services;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
-using SolutionName.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using SolutionName.ApiTemplate.Error;
 using SolutionName.Core.Interfaces.Repositories;
+using SolutionName.Core.Interfaces.Services;
+using SolutionName.Core.Services;
+using SolutionName.Infrastructure.Data;
+using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace SolutionName.ApiTemplate
 {
@@ -27,17 +28,22 @@ namespace SolutionName.ApiTemplate
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             //Register database context
             services.AddDbContext<ExampleContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ExampleConnectionString")));
+
+            services.AddMvc(o =>
+            {
+                o.Filters.Add<ValidateModelStateFilter>();
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             //Register your services
             services.AddTransient<IExampleService, ExampleService>();
 
             //Register repositories
             services.AddScoped<IExampleRepository, ExampleRepository>();
+
+            services.AddSingleton(Configuration);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -61,6 +67,7 @@ namespace SolutionName.ApiTemplate
             {
                 app.UseHsts();
             }
+            app.UseHttpsRedirection();
 
             //Swagger setup
             app.UseSwagger();
@@ -73,7 +80,6 @@ namespace SolutionName.ApiTemplate
             //Add middleware to handle errors
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

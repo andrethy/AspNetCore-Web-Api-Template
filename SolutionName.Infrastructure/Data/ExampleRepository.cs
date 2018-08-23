@@ -17,16 +17,15 @@ namespace SolutionName.Infrastructure.Data
             this.context = context;
         }
 
+        /// <summary>
+        /// Deletes all entries of the entity 'Example'
+        /// </summary>
+        /// <returns></returns>
         public async Task DeleteAllExamples()
         {
-            var examples = await GetAllExamples();
+            var examples = await List();
             context.RemoveRange(examples);
             await context.SaveChangesAsync();
-        }
-
-        public async Task<IEnumerable<Example>> GetAllExamples()
-        {
-            return await context.Set<Example>().AsNoTracking().ToListAsync();
         }
     }
 }

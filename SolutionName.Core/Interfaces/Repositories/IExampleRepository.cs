@@ -8,6 +8,5 @@ namespace SolutionName.Core.Interfaces.Repositories
     public interface IExampleRepository : IRepository<Example>
     {
         Task DeleteAllExamples();
-        Task<IEnumerable<Example>> GetAllExamples();
     }
 }

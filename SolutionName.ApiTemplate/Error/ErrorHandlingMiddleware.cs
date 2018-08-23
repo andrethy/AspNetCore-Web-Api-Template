@@ -47,12 +47,6 @@ namespace SolutionName.ApiTemplate.Error
                 exceptionMessage = apiException.Message;
                 result = JsonConvert.SerializeObject(new { error = apiException.ErrorType, errorMessage = exceptionMessage });
 
-                //Use this statement if you have authorization included
-                //if (apiException.ErrorType == ExceptionType.AuthInvalidToken)
-                //{
-                //    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                //}
-
                 if (apiException.ErrorType == ExceptionType.InvalidPropertyValue)
                 {
                     context.Response.StatusCode = StatusCodes.Status400BadRequest;

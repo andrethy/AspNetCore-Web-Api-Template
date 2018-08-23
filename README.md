@@ -1,8 +1,7 @@
 
 # AspNetCore Web API Template
-My idea of what an ASP.NET Core Web API could look like. This is a template to make you start faster, by already utilizing some well-used techniques, and having the basics and most vital elements already implemented. 
+My suggestion of what an ASP.NET Core Web API using .NET Core 2.1 could look like. This is a template to make you start faster, by already utilizing some well-used techniques, and having the basics and most vital elements already implemented. 
 The template is open for modifications, so please leave comments and suggestions! :-)
-
 
 
 ## Areas of interest:

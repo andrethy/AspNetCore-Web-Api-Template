@@ -1,16 +1,16 @@
-
 # AspNetCore Web API Template
-My idea of what an ASP.NET Core Web API could look like. This is a template to make you start faster, by already utilizing some well-used techniques, and having the basics and most vital elements already implemented. 
+My suggestion of what an ASP.NET Core Web API using .NET Core 2.1 could look like. This is a template to make you start faster, by already utilizing some well-used techniques, and having the basics and most vital elements already implemented. 
 The template is open for modifications, so please leave comments and suggestions! :-)
 
 
+## Who is this template for, and why use it?
+This template if for all that is interested in seeing how a web API could be designed using the .NET Core framework. It is by no means a perfect fit for all use cases, but it is an easy way to start a project where its purpose is to design a web API with simple CRUD functionality. It could also be used as inspiration of how to use some of the included packages / middleware, such as the logging framework or how error handling could be dealt with.
 
 ## Areas of interest:
 
 **Clean architecture**
-The architecture of this template follows the clean architecture. The architecture is dependent on three projects: Web (UI), Core and Infrastructure.
-
-A more thorough introduction can be found here: https://github.com/ardalis/CleanArchitecture - Written by Steve Smith (a Microsoft MVP and ASP.NET contributor)
+The architecture of this template follows the clean architecture. The architecture is built on three projects: Web (UI), Core and Infrastructure.
+I recommend to read a more thorough introduction, which can be found here: https://github.com/ardalis/CleanArchitecture - Written by Steve Smith (a Microsoft MVP and ASP.NET contributor)
 
 **Error handling**
 The error handling implemented in the template have been focusing on providing meaningful messages for mobile app developers. All errors consist of 2 parts: an error code and an error message.

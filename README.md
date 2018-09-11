@@ -12,7 +12,7 @@ This template if for all that is interested in seeing how a web API could be des
 The architecture of this template follows the clean architecture. The architecture is built on three projects: Web (UI), Core and Infrastructure.
 I recommend to read a more thorough introduction, which can be found here: https://github.com/ardalis/CleanArchitecture - Written by Steve Smith (a Microsoft MVP and ASP.NET contributor)
 
-**Error handling**
+**Error handling**  
 The error handling implemented in the template have been focusing on providing meaningful messages for mobile app developers. All errors consist of 2 parts: an error code and an error message.
 The error code is an integer that represents a specific exception (either thrown by you or the application)
 ![A screenshot of ExceptionType which indicates how a number represents an error](https://i.imgur.com/C8bpfu2.png)
@@ -29,12 +29,12 @@ A snippet of the class **ErrorHandlingMiddleware**:
 If you look at the picture, you will notice that there's an ExceptionType with the name "InvalidPropertyValue". All ApiExceptions with the ErrorType of InvalidPropertyValue are automatically thrown, as I have included what I call a **ValidateModelStateFilter**. **ValidateModelStateFilter** is a filter that injects itself into AspNetCore's lifecycle, so its code will be executed for each *async* action in your controllers. What it does, is to always check if the ModelState is valid, and if it isn't, it will create an error message stating which properties are invalid, and throw a new **ApiException** with this message to be handled by the **ErrorHandlingMiddleware**.
 
 
-**Dependency injection**
+**Dependency injection**  
 If you are familiar with the .NET Core framework, it is not unknown to you that dependency injection is built-in, which makes it a breeze to inject dependencies:
 ![](https://i.imgur.com/fNDJ1CR.png)
 
 
-**Integration tests**
+**Integration tests**  
 For testing purposes, SQLite has been used to incorporate an easy setup of a testing database, because SQLite supports a InMemory database. This means it can use a relational database without having one "physically" installed somewhere. 
 
 Included in this template, is a class **BaseTest** provided, which all test classes are meant to inherit from, as this **BaseTest** will ensure that each test has a new database with seeded data (provided through the included **DbInitializer**). This ensures that each test will be independent of each other and to provide you with meaningful data for your tests (as long as you update this seeder!)

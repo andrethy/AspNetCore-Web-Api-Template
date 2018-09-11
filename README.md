@@ -8,7 +8,7 @@ This template if for all that is interested in seeing how a web API could be des
 
 ## Areas of interest:
 
-**Clean architecture** 
+**Clean architecture**  
 The architecture of this template follows the clean architecture. The architecture is built on three projects: Web (UI), Core and Infrastructure.
 I recommend to read a more thorough introduction, which can be found here: https://github.com/ardalis/CleanArchitecture - Written by Steve Smith (a Microsoft MVP and ASP.NET contributor)
 
